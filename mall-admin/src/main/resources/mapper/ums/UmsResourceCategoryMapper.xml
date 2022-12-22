@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.admin.modules.ums.mapper.UmsResourceCategoryMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="io.admin.modules.ums.model.UmsResourceCategory">
+        <id column="id" property="id"/>
+        <result column="create_time" property="createTime"/>
+        <result column="name" property="name"/>
+        <result column="sort" property="sort"/>
+    </resultMap>
+
+    <!-- 关联资源查询映射结果 -->
+    <resultMap id="AssResultMap" type="io.admin.modules.ums.dto.UmsResourceCategoryDto">
+        <id column="id" property="id"/>
+        <result column="create_time" property="createTime"/>
+        <result column="name" property="name"/>
+        <result column="sort" property="sort"/>
+        <collection property="resources" select="getResourcesByCategoryId" column="id"></collection>
+    </resultMap>
+
+    <select id="getResourcesByCategoryId" resultType="io.admin.modules.ums.model.UmsResource">
+        select re.*
+        from ums_resource re
+        where re.category_id = #{id}
+    </select>
+
+    <select id="getResourceCategoryAss" resultMap="AssResultMap">
+        SELECT r.id, r.create_time, r.name, r.sort
+        FROM ums_resource_category r
+        <trim prefix="where" prefixOverrides="and">
+            And r.deleted = 0
+            <if test="keyword != null and keyword !=''">
+                AND r.name LIKE CONCAT('%',#{keyword},'%')
+            </if>
+            ORDER BY r.id
+        </trim>
+    </select>
+</mapper>

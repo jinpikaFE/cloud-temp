@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.admin.modules.ums.mapper.UmsRoleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="io.admin.modules.ums.model.UmsRole">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="description" property="description"/>
+        <result column="admin_count" property="adminCount"/>
+        <result column="create_time" property="createTime"/>
+        <result column="status" property="status"/>
+        <result column="sort" property="sort"/>
+    </resultMap>
+
+    <!-- 关联菜单和资源查询映射结果 -->
+    <resultMap id="AssMenuResourceResultMap" type="io.admin.modules.ums.dto.UmsRoleDto">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="description" property="description"/>
+        <result column="admin_count" property="adminCount"/>
+        <result column="create_time" property="createTime"/>
+        <result column="status" property="status"/>
+        <result column="sort" property="sort"/>
+        <collection property="menus" select="getMenusByRoleId" column="id"></collection>
+        <collection property="resources" select="getResourcesByRoleId" column="id"></collection>
+    </resultMap>
+
+    <select id="getRoleList" resultType="io.admin.modules.ums.model.UmsRole">
+        select r.*
+        from ums_admin_role_relation ar
+                 left join ums_role r on ar.role_id = r.id
+        where ar.admin_id = #{adminId}
+    </select>
+
+    <select id="getMenusByRoleId" resultType="io.admin.modules.ums.model.UmsMenu">
+        select m.*
+        from ums_role_menu_relation rmr
+                 left join ums_menu m on rmr.menu_id = m.id
+        where rmr.role_id = #{id}
+    </select>
+
+    <select id="getResourcesByRoleId" resultType="io.admin.modules.ums.model.UmsResource">
+        select re.*
+        from ums_role_resource_relation rrr
+                 left join ums_resource re on rrr.resource_id = re.id
+        where rrr.role_id = #{id}
+    </select>
+
+    <select id="getRoleListAndMS" resultMap="AssMenuResourceResultMap">
+        SELECT r.id, r.name, r.description, r.admin_count, r.create_time, r.status, r.sort
+        FROM ums_role r
+        <trim prefix="where" prefixOverrides="and">
+            And r.deleted = 0
+            <if test="keyword != null and keyword !=''">
+                AND r.name LIKE CONCAT('%',#{keyword},'%')
+            </if>
+            ORDER BY r.id
+        </trim>
+    </select>
+
+</mapper>
