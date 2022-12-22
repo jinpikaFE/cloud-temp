@@ -2,15 +2,18 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>io.cloudtemp</groupId>
-    <artifactId>cloudtemp</artifactId>
+
+    <groupId>com.jinpika.temp</groupId>
+    <artifactId>temp</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>cloud-temp</name>
-    <description>聚合工程</description>
+    <name>temp</name>
+    <description>聚合服务</description>
+
     <packaging>pom</packaging>
 
     <modules>
-        <module>mall-admin</module>
+        <module>temp-product</module>
+        <module>temp-ware</module>
     </modules>
 
 </project>
