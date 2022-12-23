@@ -14,6 +14,8 @@
     <modules>
         <module>temp-product</module>
         <module>temp-ware</module>
+
+        <module>renren-generator</module>
     </modules>
 
 </project>
