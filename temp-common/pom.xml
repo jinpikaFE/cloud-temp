@@ -15,7 +15,7 @@
     <description>每一个微服务公共的的依赖、bean、工具类</description>
 
     <properties>
-        <spring-cloud.version>Hoxton.SR4</spring-cloud.version>
+        <spring-cloud.version>2022.0.0</spring-cloud.version>
         <spring-boot.version>2.3.1.RELEASE</spring-boot.version>
         <spring-cloud-alibaba.version>2.1.1.RELEASE</spring-cloud-alibaba.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -33,6 +33,11 @@
     </properties>
     <!--添加其他项目需要的依赖-->
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-loadbalancer</artifactId>
+            <version>3.1.3</version>
+        </dependency>
         <!--集成druid连接池-->
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -61,7 +66,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <optional>true</optional>
         </dependency>
         <!--MyBatis Plus 依赖-->
         <dependency>
