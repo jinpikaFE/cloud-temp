@@ -1,0 +1,25 @@
+server:
+  port: 8100
+
+spring:
+  application:
+    name: temp-member
+  profiles:
+    active: dev
+  #  main:
+  #    allow-circular-references: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-field: deleted # 全局逻辑删除的实体字段名(since 3.3.0,配置后可以忽略不配置步骤2)
+      logic-delete-value: UNIX_TIMESTAMP() # 逻辑已删除值(默认为 当前时间戳 秒)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+  configuration:
+    auto-mapping-behavior: partial
+    map-underscore-to-camel-case: true
