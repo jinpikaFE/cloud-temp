@@ -15,6 +15,9 @@
         <module>temp-product</module>
         <module>temp-temp</module>
 
+        <module>temp-member</module>
+        <module>temp-coupon</module>
+
         <module>temp-common</module>
 
         <module>temp-generator</module>
