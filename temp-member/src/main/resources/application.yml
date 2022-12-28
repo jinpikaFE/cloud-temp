@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: temp-member
+    name: temp-member # 之所以需要配置 spring.application.name，是因为它是构成 Nacos 配置管理 dataId字段的一部分。
   profiles:
     active: dev
   #  main:
