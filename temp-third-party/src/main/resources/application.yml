@@ -1,0 +1,29 @@
+server:
+  port: 8101
+
+spring:
+  application:
+    name: temp-third-party
+  profiles:
+    active: dev
+  #  main:
+  #    allow-circular-references: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.56.10:8848
+        namespace: 1ce7b317-7dfa-4472-bfc6-5f2230be1e97
+
+# cos相关配置
+tencentyun:
+  cos:
+    endpoint: cos.ap-shanghai.myqcloud.com # cos对外服务的访问域名
+    region: ap-shanghai # 地域
+    secretId: AKID3sSmpb7MK0TfZCYeT1LPCjzzh8IBn8Cy # 访问身份验证中用到用户标识
+    secretKey: XooXzA4h27vSiiRt4zd06wVnnX0C6j6B # 用户用于加密签名字符串和oss用来验证签名字符串的密钥
+    bucketName: jinpika-1308276765 # oss的存储空间
+    dir:
+      prefix: bootdemo-file/ # 上传文件夹路径前缀

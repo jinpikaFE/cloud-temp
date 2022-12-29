@@ -15,6 +15,7 @@
         <module>temp-product</module>
         <module>temp-temp</module>
         <module>temp-gateway</module>
+        <module>temp-third-party</module>
 
         <module>temp-member</module>
         <module>temp-coupon</module>

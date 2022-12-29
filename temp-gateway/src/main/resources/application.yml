@@ -29,7 +29,12 @@ spring:
             - Path=/api/v1/ums/**
           filters:
             - RewritePath=/api/v1/(?<segment>.*),/$\{segment}
-
+        - id: temp_third_party_route
+          uri: lb://temp-third-party # lb:// 启用负载均衡，后面接nacos 服务名
+          predicates:
+            - Path=/api/v1/cos/**
+          filters:
+            - RewritePath=/api/v1/(?<segment>.*),/$\{segment}
   #  predicates：
   #  After：匹配在指定日期时间之后发生的请求。
   #  Before：匹配在指定日期之前发生的请求。
