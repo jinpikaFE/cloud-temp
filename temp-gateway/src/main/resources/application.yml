@@ -1,0 +1,49 @@
+server:
+  port: 88
+
+spring:
+  application:
+    name: temp-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.56.10:8848
+        namespace: 1ce7b317-7dfa-4472-bfc6-5f2230be1e97
+    gateway:
+      routes:
+        # 测试内容
+        # http://localhost:88/?url=baidu 打开该地址网关到百度
+        - id: test_route
+          uri: https://www.baidu.com
+          predicates:
+            - Query=url,baidu
+        # http://localhost:88/?url=qq
+        - id: qq_route
+          uri: https://www.qq.com
+          predicates:
+            - Query=url,qq
+
+        - id: temp_member_route
+          uri: lb://temp-member # lb:// 启用负载均衡，后面接nacos 服务名
+          predicates:
+            - Path=/api/v1/ums/**
+          filters:
+            - RewritePath=/api/v1/(?<segment>.*),/$\{segment}
+
+  #  predicates：
+  #  After：匹配在指定日期时间之后发生的请求。
+  #  Before：匹配在指定日期之前发生的请求。
+  #  Between：需要指定两个日期参数，设定一个时间区间，匹配此时间区间内的请求。
+  #  Cookie：需要指定两个参数，分别为name和regexp（正则表达式），也可以理解Key和Value，匹配具有给定名称且其值与正则表达式匹配的Cookie。
+  #  Header：需要两个参数header和regexp（正则表达式），也可以理解为Key和Value，匹配请求携带信息。
+  #  Host：匹配当前请求是否来自于设置的主机。
+  #  Method：可以设置一个或多个参数，匹配HTTP请求，比如GET、POST。
+  #  Path：匹配指定路径下的请求，可以是多个用逗号分隔。
+  #  Query：需要指定一个或者多个参数，一个必须参数和一个可选的正则表达式，匹配请求中是否包含第一个参数，如果有两个参数，则匹配请求中第一个参数的值是否符合正则表达式。
+  #  RemoteAddr：匹配指定IP或IP段，符合条件转发。
+  #  Weight：需要两个参数group和weight（int），实现了路由权重功能，按照路由权重选择同一个分组中的路由。
+  ## 前端项目，/api
+
+## http://localhost:88/api/captcha.jpg   http://localhost:8080/renren-fast/captcha.jpg
+## http://localhost:88/api/product/category/list/tree http://localhost:10000/product/category/list/tree
+
