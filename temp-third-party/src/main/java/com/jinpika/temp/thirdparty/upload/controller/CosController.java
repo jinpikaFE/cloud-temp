@@ -1,5 +1,6 @@
 package com.jinpika.temp.thirdparty.upload.controller;
 
+import com.jinpika.common.utils.R;
 import com.jinpika.temp.thirdparty.upload.dto.CosCallbackResult;
 import com.jinpika.temp.thirdparty.upload.service.impl.CosServiceImpl;
 import io.swagger.annotations.Api;
@@ -27,9 +28,9 @@ public class CosController {
     @ApiOperation(value = "cos上传对象")
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
-    public CosCallbackResult upload(@RequestPart("file") MultipartFile file) {
+    public R upload(@RequestPart("file") MultipartFile file) {
 
         CosCallbackResult result = cosService.upload(file);
-        return result;
+        return R.ok().setData(result);
     }
 }

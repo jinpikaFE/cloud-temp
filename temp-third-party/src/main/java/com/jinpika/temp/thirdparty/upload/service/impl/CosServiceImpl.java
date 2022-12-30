@@ -30,9 +30,6 @@ public class CosServiceImpl implements CosService {
     @Autowired
     private COSClient cosClient;
 
-    /**
-     * 签名生成
-     */
     @Override
     public CosCallbackResult upload(MultipartFile file) {
         CosCallbackResult result = new CosCallbackResult();

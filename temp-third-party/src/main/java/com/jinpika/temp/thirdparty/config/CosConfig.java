@@ -14,14 +14,14 @@ import org.springframework.context.annotation.Configuration;
 public class CosConfig {
     @Value("${tencentyun.cos.region}")
     private String TENCENTYUN_COS_REGION;
-    @Value("${tencentyun.cos.secretId}")
-    private String TENCENTYUN_COS_SECRETID;
-    @Value("${tencentyun.cos.secretKey}")
-    private String TENCENTYUN_COS_SECRETKEY;
+    @Value("${tencentyun.secretId}")
+    private String TENCENTYUN_SECRETID;
+    @Value("${tencentyun.secretKey}")
+    private String TENCENTYUN_SECRETKEY;
 
     @Bean
     public COSClient cosClient() {
-        COSCredentials cred = new BasicCOSCredentials(TENCENTYUN_COS_SECRETID, TENCENTYUN_COS_SECRETKEY);
+        COSCredentials cred = new BasicCOSCredentials(TENCENTYUN_SECRETID, TENCENTYUN_SECRETKEY);
         Region region = new Region(TENCENTYUN_COS_REGION);
         ClientConfig clientConfig = new ClientConfig(region);
         clientConfig.setHttpProtocol(HttpProtocol.https);
