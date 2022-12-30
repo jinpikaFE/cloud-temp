@@ -32,7 +32,7 @@ spring:
         - id: temp_third_party_route
           uri: lb://temp-third-party # lb:// 启用负载均衡，后面接nacos 服务名
           predicates:
-            - Path=/api/v1/cos/**
+            - Path=/api/v1/cos/**,/api/v1/sms/**
           filters:
             - RewritePath=/api/v1/(?<segment>.*),/$\{segment}
   #  predicates：
