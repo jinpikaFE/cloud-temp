@@ -49,7 +49,15 @@ public class SmsController {
     @RequestMapping(value = "/sendSms", method = RequestMethod.POST)
     @ResponseBody
     public R sendSms(@Validated @RequestBody SmsParams smsParams) {
-        String key = REDIS_DATABASE + ":" + REDIS_KEY_MAIN + ":" + smsParams.getType() + ":" + smsParams.getPhone();
+        String key = new StringBuilder()
+                .append(REDIS_DATABASE)
+                .append(":")
+                .append(REDIS_KEY_MAIN)
+                .append(":")
+                .append(smsParams.getType())
+                .append(":")
+                .append(smsParams.getPhone())
+                .toString();
 
         String redisCode = (String) redisService.get(key);
         // 如果不为空，返回错误信息
