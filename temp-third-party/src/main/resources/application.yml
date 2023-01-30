@@ -31,3 +31,10 @@ tencentyun:
     smsAppId: 1400691867
     signName: 金皮卡的小站
     region: ap-guangzhou
+
+redis:
+  database: temp
+  key:
+    sms: 'thirdParty:sms'
+  expire:
+    common: 86400 # 24小时

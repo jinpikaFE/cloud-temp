@@ -28,7 +28,7 @@ public class SmsServiceImpl implements SmsService {
     private String TENCENTYUN_SMS_SIGN_NAME;
 
     @Override
-    public SmsResult sendSms(String phone) {
+    public SmsResult sendSms(String phone, String expire) {
         /* 必要步骤：
          * 实例化一个认证对象，入参需要传入腾讯云账户密钥对secretId，secretKey。
          * 这里采用的是从环境变量读取的方式，需要在环境变量中先设置这两个值。
@@ -53,7 +53,8 @@ public class SmsServiceImpl implements SmsService {
         req.setPhoneNumberSet(new String[]{"+86" + phone});
         /* 模板参数: 若无模板参数，则设置为空 */
         // 该模板第一参数验证码，第二参数需要传时间 5分钟
-        String[] templateParamSet = {VerifyCodeUntil.getVerifyCodes(6), "5"};
+        String verifyCodes = VerifyCodeUntil.getVerifyCodes(6);
+        String[] templateParamSet = {verifyCodes, expire};
         req.setTemplateParamSet(templateParamSet);
         /* 通过 client 对象调用 SendSms 方法发起请求。注意请求方法名与请求对象是对应的
          * 返回的 res 是一个 SendSmsResponse 类的实例，与请求对象对应 */
@@ -62,6 +63,7 @@ public class SmsServiceImpl implements SmsService {
         // 默认ok
         smsResult.setCode("Ok");
         smsResult.setPhoneNumber(phone);
+        smsResult.setVerifyCodes(verifyCodes);
         try {
             res = client.SendSms(req);
         } catch (TencentCloudSDKException ex) {

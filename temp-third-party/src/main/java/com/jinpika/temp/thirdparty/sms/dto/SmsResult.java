@@ -18,4 +18,7 @@ public class SmsResult {
 
     @ApiModelProperty("请求id")
     private String RequestId;
+
+    // 验证码
+    private String verifyCodes;
 }
