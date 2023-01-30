@@ -39,17 +39,32 @@ public class SmsController {
     @Value("${redis.key.sms}")
     private String REDIS_KEY_MAIN;
 
+    /**
+     * 将当前时间与code一起存储
+     * 60s调用限制60s内再次调用返回错误信息
+     * 60s以后再次调用，需要删除之前存储的phone-code
+     * code过期时间 5分钟
+     */
     @ApiOperation(value = "sms发送短信")
     @RequestMapping(value = "/sendSms", method = RequestMethod.POST)
     @ResponseBody
     public R sendSms(@Validated @RequestBody SmsParams smsParams) {
+        String key = REDIS_DATABASE + ":" + REDIS_KEY_MAIN + ":" + smsParams.getType() + ":" + smsParams.getPhone();
+
+        String redisCode = (String) redisService.get(key);
+        // 如果不为空，返回错误信息
+        if (null != redisCode && redisCode.length() > 0) {
+            long CuuTime = Long.parseLong(redisCode.split("_")[1]);
+            if ((System.currentTimeMillis() - CuuTime) < 60 * 1000) { // 60s
+                return R.error("再次发送时间小于60s");
+            }
+        }
 
         String smsExpire = "5";
         SmsResult result = smsService.sendSms(smsParams.getPhone(), smsExpire);
 
-        String key = REDIS_DATABASE + ":" + REDIS_KEY_MAIN + ":" + smsParams.getPhone();
         // 时间5分钟取秒
-        redisService.set(key, result.getVerifyCodes(), new Integer(smsExpire) * 60);
+        redisService.set(key, result.getVerifyCodes() + "_" + System.currentTimeMillis(), new Integer(smsExpire) * 60);
 
         result.setVerifyCodes(null);
         if (result.getCode().equals("Ok")) {

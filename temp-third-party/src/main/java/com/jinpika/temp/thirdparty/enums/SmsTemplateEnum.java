@@ -14,3 +14,4 @@ public enum SmsTemplateEnum {
     private final String TemplateID;
     private final String TemplateDesc;
 }
+
