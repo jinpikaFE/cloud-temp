@@ -17,6 +17,8 @@
         <module>temp-gateway</module>
         <module>temp-third-party</module>
 
+        <module>temp-auth</module>
+
         <module>temp-member</module>
         <module>temp-coupon</module>
 
