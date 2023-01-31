@@ -1,5 +1,6 @@
 package com.jinpika.temp.thirdparty.sms.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,5 +21,6 @@ public class SmsResult {
     private String RequestId;
 
     // 验证码
+    @JsonIgnore
     private String verifyCodes;
 }
