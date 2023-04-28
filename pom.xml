@@ -12,7 +12,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>temp-product</module>
+        <module>temp-ums</module>
         <!-- 基础模块 -->
         <module>temp-gateway</module>
         <module>temp-third-party</module>
@@ -20,9 +20,6 @@
         <module>temp-common</module>
         <module>temp-generator</module>
         <module>temp-temp</module>
-
-        <module>temp-member</module>
-        <module>temp-coupon</module>
 
     </modules>
 
