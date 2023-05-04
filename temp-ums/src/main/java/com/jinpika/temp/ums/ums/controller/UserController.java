@@ -31,8 +31,7 @@ public class UserController {
     public ResponseEntity<CommonResult<CommonPage<User>>> list(@RequestParam(value = "keyword", required = false) String keyword,
                                                                @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
                                                                @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
-        Page<User> userList = userService.list(keyword, pageNum, pageSize);
-        System.out.println(userList);
+        Page<User> userList = userService.list(keyword, pageSize, pageNum);
         return CommonResult.success(CommonPage.restPage(userList));
     }
 }
