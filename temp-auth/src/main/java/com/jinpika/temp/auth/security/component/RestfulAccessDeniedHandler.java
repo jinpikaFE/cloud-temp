@@ -2,7 +2,7 @@ package com.jinpika.temp.auth.security.component;
 
 import cn.hutool.http.HttpStatus;
 import cn.hutool.json.JSONUtil;
-import com.jinpika.common.utils.CommonResult;
+import com.jinpika.common.api.CommonResult;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 

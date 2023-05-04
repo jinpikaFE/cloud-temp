@@ -1,4 +1,4 @@
-package com.jinpika.temp.admin.common.domain;
+package com.jinpika.common.domain;
 
 import lombok.Builder;
 import lombok.Data;

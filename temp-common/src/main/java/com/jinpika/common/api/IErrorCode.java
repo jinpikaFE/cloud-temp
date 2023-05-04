@@ -1,4 +1,4 @@
-package com.jinpika.common.utils;
+package com.jinpika.common.api;
 
 /**
  * 封装API的错误码

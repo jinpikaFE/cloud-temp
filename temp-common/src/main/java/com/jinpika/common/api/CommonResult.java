@@ -1,4 +1,4 @@
-package com.jinpika.common.utils;
+package com.jinpika.common.api;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

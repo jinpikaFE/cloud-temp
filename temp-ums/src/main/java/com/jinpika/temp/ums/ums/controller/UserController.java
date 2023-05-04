@@ -1,8 +1,15 @@
 package com.jinpika.temp.ums.ums.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.jinpika.common.api.CommonPage;
+import com.jinpika.common.api.CommonResult;
+import com.jinpika.temp.ums.ums.model.User;
+import com.jinpika.temp.ums.ums.service.UserService;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -10,11 +17,23 @@ import org.springframework.web.bind.annotation.RestController;
  * </p>
  *
  * @author macro
- * @since 2023-04-28
+ * @since 2023-05-04
  */
 @RestController
 @RequestMapping("/ums/user")
 public class UserController {
+    @Autowired
+    private UserService userService;
 
+    @ApiOperation("根据用户名或邮箱分页获取用户列表")
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<CommonResult<CommonPage<User>>> list(@RequestParam(value = "keyword", required = false) String keyword,
+                                                               @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
+                                                               @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
+        Page<User> userList = userService.list(keyword, pageNum, pageSize);
+        System.out.println(userList);
+        return CommonResult.success(CommonPage.restPage(userList));
+    }
 }
 

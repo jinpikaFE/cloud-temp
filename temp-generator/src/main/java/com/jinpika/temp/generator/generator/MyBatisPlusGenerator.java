@@ -57,7 +57,7 @@ public class MyBatisPlusGenerator {
         String outputDir = props.getStr("outputDir");
         return new GlobalConfig.Builder()
                 .outputDir(projectPath + outputDir + "/src/main/java")
-                .author("macro")
+                .author("jinpika")
                 .disableOpenDir()
                 .enableSwagger()
                 .fileOverride()

@@ -15,4 +15,21 @@
         <result column="salt" property="salt"/>
     </resultMap>
 
+    <select id="getUserList" resultMap="BaseResultMap">
+        SELECT u.id,
+        u.username,
+        u.email,
+        u.create_time,
+        u.update_time
+        FROM user u
+        <trim prefix="where" prefixOverrides="and">
+            And u.deleted = 0
+            <if test="keyword != null and keyword !=''">
+                AND u.username LIKE CONCAT('%',#{keyword},'%')
+                OR u.email LIKE CONCAT('%',#{keyword},'%')
+            </if>
+            ORDER BY u.id
+        </trim>
+    </select>
+
 </mapper>

@@ -23,11 +23,11 @@ spring:
           predicates:
             - Query=url,qq
 
-        - id: temp_member_route
-          uri: lb://temp-member # lb:// 启用负载均衡，后面接nacos 服务名
+        - id: temp_ums_route
+          uri: lb://temp-ums # lb:// 启用负载均衡，后面接nacos 服务名
           predicates:
             - Path=/api/v1/ums/**
-          filters:
+          filters: # /api/v1/(?<segment>.*) 自动添加api/v1前缀
             - RewritePath=/api/v1/(?<segment>.*),/$\{segment}
         - id: temp_third_party_route
           uri: lb://temp-third-party # lb:// 启用负载均衡，后面接nacos 服务名

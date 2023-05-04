@@ -163,12 +163,6 @@
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
-        <!--SpringSecurity依赖配置-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-
         <!--jsr3参数校验器-->
         <!--        <dependency>-->
         <!--            <groupId>javax.validation</groupId>-->

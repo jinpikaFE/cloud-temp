@@ -1,4 +1,4 @@
-package com.jinpika.common.utils;
+package com.jinpika.common.api;
 
 /**
  * 枚举了一些常用API操作码

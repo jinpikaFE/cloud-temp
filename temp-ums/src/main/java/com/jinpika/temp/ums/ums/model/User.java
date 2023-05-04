@@ -2,6 +2,7 @@ package com.jinpika.temp.ums.ums.model;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -16,7 +17,7 @@ import java.util.Date;
  * </p>
  *
  * @author macro
- * @since 2023-04-28
+ * @since 2023-05-04
  */
 @Getter
 @Setter
@@ -42,6 +43,7 @@ public class User implements Serializable {
 
     private String avatar;
 
+    @JsonIgnore
     private String password;
 
     private String salt;

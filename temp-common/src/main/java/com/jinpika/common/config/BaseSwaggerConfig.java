@@ -1,6 +1,6 @@
-package com.jinpika.temp.admin.common.config;
+package com.jinpika.common.config;
 
-import com.jinpika.temp.admin.common.domain.SwaggerProperties;
+import com.jinpika.common.domain.SwaggerProperties;
 import org.springframework.context.annotation.Bean;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;

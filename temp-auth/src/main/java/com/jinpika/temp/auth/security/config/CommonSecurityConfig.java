@@ -1,6 +1,5 @@
 package com.jinpika.temp.auth.security.config;
 
-import com.jinpika.common.utils.JwtTokenUtil;
 import com.jinpika.temp.auth.security.component.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

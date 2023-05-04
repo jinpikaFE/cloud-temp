@@ -1,4 +1,4 @@
-package com.jinpika.temp.admin.config;
+package com.jinpika.temp.ums.config;
 
 import com.jinpika.common.config.BaseSwaggerConfig;
 import com.jinpika.common.domain.SwaggerProperties;
