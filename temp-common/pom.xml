@@ -33,6 +33,7 @@
         <springfox-swagger.version>3.0.0</springfox-swagger.version>
         <velocity.version>2.3</velocity.version>
         <fastjson.version>1.2.79</fastjson.version>
+        <nimbus-jose-jwt.version>9.23</nimbus-jose-jwt.version>
     </properties>
     <!--添加其他项目需要的依赖-->
     <dependencies>
@@ -194,29 +195,12 @@
             <artifactId>logstash-logback-encoder</artifactId>
             <version>6.6</version>
         </dependency>
-
-        <!--jsr3参数校验器-->
-        <!--        <dependency>-->
-        <!--            <groupId>javax.validation</groupId>-->
-        <!--            <artifactId>validation-api</artifactId>-->
-        <!--            <version>2.0.1.Final</version>-->
-        <!--        </dependency>-->
-
-        <!--热启动-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.boot</groupId>-->
-        <!--            <artifactId>spring-boot-devtools</artifactId>-->
-        <!--            &lt;!&ndash;不编译，所以test有报错不影响启动&ndash;&gt;-->
-        <!--            <scope>runtime</scope>-->
-        <!--            &lt;!&ndash;故意注释掉，让子项目都热启动&ndash;&gt;-->
-        <!--            &lt;!&ndash;            <optional>true</optional>&ndash;&gt;-->
-        <!--        </dependency>-->
-        <!--        &lt;!&ndash;配置文件提示&ndash;&gt;-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.boot</groupId>-->
-        <!--            <artifactId>spring-boot-configuration-processor</artifactId>-->
-        <!--&lt;!&ndash;            <optional>true</optional>&ndash;&gt;-->
-        <!--        </dependency>-->
+        <!--    jwt    -->
+        <dependency>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>nimbus-jose-jwt</artifactId>
+            <version>${nimbus-jose-jwt.version}</version>
+        </dependency>
 
 
     </dependencies>
