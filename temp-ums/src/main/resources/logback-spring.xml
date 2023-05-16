@@ -4,7 +4,7 @@
     <!--    该配置会读取配置文件application.yml的spring.application.name的值，获取到服务名-->
     <springProperty scope="context" name="springAppName" source="spring.application.name"/>
     <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <destination>192.168.56.10:5000</destination>
+        <destination>192.168.56.10:4560</destination>
         <encoder class="net.logstash.logback.encoder.LogstashEncoder">
             <customFields>{"appname":"${springAppName:-}"}</customFields>
         </encoder>

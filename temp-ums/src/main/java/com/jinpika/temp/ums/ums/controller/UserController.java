@@ -6,6 +6,7 @@ import com.jinpika.common.api.CommonPage;
 import com.jinpika.common.api.CommonResult;
 import com.jinpika.temp.ums.ums.model.User;
 import com.jinpika.temp.ums.ums.service.UserService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
  * @author macro
  * @since 2023-05-04
  */
+@Api(tags = "UserController", description = "用户中心")
 @RestController
 @RequestMapping("/ums/user")
 public class UserController {
