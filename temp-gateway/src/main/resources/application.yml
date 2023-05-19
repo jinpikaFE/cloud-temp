@@ -31,22 +31,22 @@ spring:
         - id: temp_ums_route
           uri: lb://temp-ums # lb:// 启用负载均衡，后面接nacos 服务名
           predicates:
-            - Path=/api/v1/ums/**
+            - Path=/api/temp-ums/**
           filters: # /api/v1/(?<segment>.*) 自动添加api/v1前缀
             - StripPrefix=2 # 截取2个 /api/v1/   /ums/user/list 与微服务地址一致
         - id: temp_third_party_route
           uri: lb://temp-third-party # lb:// 启用负载均衡，后面接nacos 服务名
           predicates:
-            - Path=/api/v1/cos/**,/api/v1/sms/**
+            - Path=/api/third-party/**
           filters:
             - StripPrefix=2
             # - SwaggerHeaderFilter swagger需要添加下面 截取3ge /api/v1/cos/
         - id: temp_auth_route
           uri: lb://temp-auth # lb:// 启用负载均衡，后面接nacos 服务名
           predicates:
-            - Path=/api/v1/**
+            - Path=/api/**
           filters: # /api/v1/(?<segment>.*) 自动添加api/v1前缀
-            - StripPrefix=2
+            - StripPrefix=1
   #  predicates：
   #  After：匹配在指定日期时间之后发生的请求。
   #  Before：匹配在指定日期之前发生的请求。
@@ -72,18 +72,17 @@ secure:
       - "/swagger/**"
       - "/swagger-ui/index.html"
       - "/*/v2/api-docs"
-      - "/api/v1/*/v2/api-docs"
-      - "/api/v1/v2/api-docs"
+      - "/api/*/v2/api-docs"
+      - "/api/v2/api-docs"
       - "/v2/api-docs"
-      - "/api/v1/ums/user/list"
       - "/*/*.js"
       - "/*/*.css"
       - "/*/*.png"
       - "/*/*.ico"
       - "/webjars/**"
       - "/actuator/**"
-      - "/api/v1/oauth/token"
-      - "/api/v1/rsa/publicKey"
+      - "/api/oauth/token"
+      - "/api/rsa/publicKey"
       - "/mall-search/**"
       - "/mall-portal/sso/login"
       - "/mall-portal/sso/register"
