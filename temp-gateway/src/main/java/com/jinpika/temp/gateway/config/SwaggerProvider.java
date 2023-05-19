@@ -1,5 +1,7 @@
 package com.jinpika.temp.gateway.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.config.GatewayProperties;
 import org.springframework.cloud.gateway.route.RouteLocator;
@@ -16,6 +18,7 @@ import java.util.List;
 @Primary
 @Component
 public class SwaggerProvider implements SwaggerResourcesProvider {
+    private static Logger LOGGER = LoggerFactory.getLogger(SwaggerProvider.class);
 
     /**
      * Swagger2默认的url后缀
@@ -52,6 +55,7 @@ public class SwaggerProvider implements SwaggerResourcesProvider {
     }
 
     private SwaggerResource swaggerResource(String name, String url) {
+        LOGGER.info("name:{},location:{}", name, url);
         SwaggerResource swaggerResource = new SwaggerResource();
         swaggerResource.setName(name);
         swaggerResource.setLocation(url);
