@@ -21,13 +21,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // 对HTTP请求进行授权处理
         http.authorizeRequests()
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll() // 允许所有Actuator的Endpoint请求
-                .antMatchers("/rsa/publicKey").permitAll()
-                .antMatchers(HttpMethod.POST, "/oauth/test").permitAll()
                 .antMatchers("/v2/api-docs").permitAll()
                 .antMatchers("/swagger-ui/*").permitAll()
                 .antMatchers("/swagger-resources/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/oauth/token").permitAll()
-                .anyRequest().permitAll(); // 其他请求需要进行认证
+                .antMatchers("/oauth/token").permitAll()
+                .antMatchers(HttpMethod.OPTIONS).permitAll()
+                .anyRequest().authenticated(); // 其他请求需要进行认证
     }
 
     // 定义认证管理器Bean
