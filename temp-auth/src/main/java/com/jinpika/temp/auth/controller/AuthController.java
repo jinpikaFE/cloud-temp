@@ -20,7 +20,7 @@ import java.util.Map;
 @Api(tags = "AuthController")
 @Tag(name = "AuthController", description = "权限")
 @RestController
-@RequestMapping("/oauth")
+@RequestMapping("/auth/oauth")
 public class AuthController {
 
     @Autowired

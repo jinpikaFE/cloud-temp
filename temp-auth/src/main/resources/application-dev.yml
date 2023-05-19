@@ -7,4 +7,4 @@ spring:
 logging:
   level:
     root: info
-    com.macro.mall: debug
+    com.jinpika.temp.auth: debug

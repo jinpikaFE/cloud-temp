@@ -4,6 +4,11 @@ server:
 spring:
   application:
     name: temp-gateway
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: 'http://localhost:8300/auth/rsa/publicKey' #配置RSA的公钥访问地址
   cloud:
     nacos:
       discovery:
@@ -36,8 +41,15 @@ spring:
             - Path=/api/v1/cos/**,/api/v1/sms/**
           filters:
             - RewritePath=/api/v1/(?<segment>.*),/$\{segment}
-            - - StripPrefix=1
+            - StripPrefix=1
             # - SwaggerHeaderFilter swagger需要添加下面
+        - id: temp_auth_route
+          uri: lb://temp-auth # lb:// 启用负载均衡，后面接nacos 服务名
+          predicates:
+            - Path=/api/v1/auth/**
+          filters: # /api/v1/(?<segment>.*) 自动添加api/v1前缀
+            - RewritePath=/api/v1/auth/(?<segment>.*),/$\{segment}
+            - StripPrefix=1
   #  predicates：
   #  After：匹配在指定日期时间之后发生的请求。
   #  Before：匹配在指定日期之前发生的请求。
@@ -69,8 +81,8 @@ secure:
       - "/*/*.ico"
       - "/webjars/**"
       - "/actuator/**"
-      - "/mall-auth/oauth/token"
-      - "/mall-auth/rsa/publicKey"
+      - "/api/v1/auth/oauth/token"
+      - "/api/v1/auth/rsa/publicKey"
       - "/mall-search/**"
       - "/mall-portal/sso/login"
       - "/mall-portal/sso/register"

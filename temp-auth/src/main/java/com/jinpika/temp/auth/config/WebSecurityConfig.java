@@ -25,6 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/swagger-ui/*").permitAll()
                 .antMatchers("/swagger-resources/**").permitAll()
                 .antMatchers("/oauth/token").permitAll()
+                .antMatchers("/rsa/publicKey").permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .anyRequest().authenticated(); // 其他请求需要进行认证
     }

@@ -17,7 +17,7 @@ import java.util.Map;
 @Api(tags = "KeyPairController")
 @Tag(name = "KeyPairController", description = "密钥")
 @RestController
-@RequestMapping("/rsa")
+@RequestMapping("/auth/rsa")
 public class KeyPairController {
 
     @Autowired
