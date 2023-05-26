@@ -14,7 +14,7 @@ import com.jinpika.temp.ums.ums.model.ResourceCategory;
  */
 public interface ResourceCategoryMapper extends BaseMapper<ResourceCategory> {
     /**
-     * 获取admin 带roles
+     * 获取资源分类
      *
      * @return
      */

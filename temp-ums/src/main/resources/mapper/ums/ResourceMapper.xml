@@ -3,14 +3,34 @@
 <mapper namespace="com.jinpika.temp.ums.ums.mapper.ResourceMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.jinpika.temp.ums.ums.model.Resource">
+    <resultMap id="BaseResultMap" type="com.jinpika.temp.ums.ums.dto.ResourceDto">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="url" property="url"/>
         <result column="description" property="description"/>
         <result column="category_id" property="categoryId"/>
+        <result column="category_name" property="categoryName"/>
         <result column="created_at" property="createdAt"/>
         <result column="updated_at" property="updatedAt"/>
     </resultMap>
 
+    <select id="getResourceList" resultMap="BaseResultMap">
+        SELECT r.id,
+        r.name,
+        r.url,
+        r.description,
+        r.created_at,
+        r.updated_at,
+        r.category_id,
+        rc.name category_name
+        FROM resource r
+        left join resource_category rc on r.category_id = rc.id
+        <trim prefix="where" prefixOverrides="and">
+            And r.deleted = 0 And r.category_id = #{categoryId}
+            <if test="keyword != null and keyword !=''">
+                AND r.name LIKE CONCAT('%',#{keyword},'%')
+            </if>
+            ORDER BY r.id
+        </trim>
+    </select>
 </mapper>

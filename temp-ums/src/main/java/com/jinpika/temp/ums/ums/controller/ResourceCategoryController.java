@@ -1,9 +1,12 @@
 package com.jinpika.temp.ums.ums.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jinpika.common.api.CommonPage;
 import com.jinpika.common.api.CommonResult;
+import com.jinpika.temp.ums.ums.mapper.ResourceMapper;
+import com.jinpika.temp.ums.ums.model.Resource;
 import com.jinpika.temp.ums.ums.model.ResourceCategory;
 import com.jinpika.temp.ums.ums.service.ResourceCategoryService;
 import io.swagger.annotations.Api;
@@ -28,6 +31,9 @@ import org.springframework.web.bind.annotation.*;
 public class ResourceCategoryController {
     @Autowired
     private ResourceCategoryService resourceCategoryService;
+    @Autowired
+    private ResourceMapper resourceMapper;
+
 
     @ApiOperation("添加资源分类")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
@@ -39,9 +45,16 @@ public class ResourceCategoryController {
     @ApiOperation("删除资源分类")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<CommonResult<Object>> delete(@PathVariable Long id) {
-        if (resourceCategoryService.getById(id) == null) {
+        ResourceCategory resourceCategory = resourceCategoryService.getById(id);
+        if (resourceCategory == null) {
             return CommonResult.validateFailed("记录不存在");
         }
+        /**
+         * 删除分类下的资源
+         */
+        LambdaQueryWrapper<Resource> wrapper = new LambdaQueryWrapper<>();
+        wrapper.in(Resource::getCategoryId, resourceCategory.getId());
+        resourceMapper.delete(wrapper);
         boolean success = resourceCategoryService.removeById(id);
         return success ? CommonResult.success(null) : CommonResult.failed();
     }
