@@ -6,7 +6,7 @@ import com.jinpika.temp.ums.ums.mapper.MenuMapper;
 import com.jinpika.temp.ums.ums.model.Menu;
 import com.jinpika.temp.ums.ums.service.MenuService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,21 +33,21 @@ public class MenuController {
     @Autowired
     private MenuMapper menuMapper;
 
-    @ApiModelProperty("添加菜单")
+    @ApiOperation("添加菜单")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ResponseEntity<CommonResult<Object>> create(@RequestBody Menu menu) {
         boolean success = menuService.save(menu);
         return success ? CommonResult.success(null) : CommonResult.failed();
     }
 
-    @ApiModelProperty("删除菜单")
+    @ApiOperation("删除菜单")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<CommonResult<Object>> delete(@PathVariable Long id) {
         boolean success = menuService.removeById(id);
         return success ? CommonResult.success(null) : CommonResult.failed();
     }
 
-    @ApiModelProperty("更新菜单")
+    @ApiOperation("更新菜单")
     @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
     public ResponseEntity<CommonResult<Object>> update(@PathVariable Integer id, @RequestBody Menu menu) {
         menu.setId(id);
@@ -55,7 +55,7 @@ public class MenuController {
         return success ? CommonResult.success(null) : CommonResult.failed();
     }
 
-    @ApiModelProperty("获取所有菜单")
+    @ApiOperation("获取所有菜单")
     @GetMapping("/listAll")
     public ResponseEntity<CommonResult<List<Menu>>> list() {
         List<Menu> menuList = menuService.list();

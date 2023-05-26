@@ -2,6 +2,7 @@ package com.jinpika.temp.ums.ums.model;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,5 +34,6 @@ public class Role implements Serializable {
 
     private Date updatedAt;
 
-
+    @TableLogic
+    private Integer deleted;
 }
