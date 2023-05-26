@@ -50,6 +50,9 @@ public class MenuController {
     @ApiOperation("更新菜单")
     @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
     public ResponseEntity<CommonResult<Object>> update(@PathVariable Integer id, @RequestBody Menu menu) {
+        if (menuService.getById(id) == null) {
+            return CommonResult.validateFailed("记录不存在");
+        }
         menu.setId(id);
         boolean success = menuService.updateById(menu);
         return success ? CommonResult.success(null) : CommonResult.failed();

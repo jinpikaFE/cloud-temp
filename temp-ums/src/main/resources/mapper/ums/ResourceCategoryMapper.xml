@@ -11,4 +11,19 @@
         <result column="updated_at" property="updatedAt"/>
     </resultMap>
 
+    <select id="getResourceCategoryList" resultMap="BaseResultMap">
+        SELECT rc.id,
+        rc.name,
+        rc.sort,
+        rc.created_at,
+        rc.updated_at
+        FROM resource_category rc
+        <trim prefix="where" prefixOverrides="and">
+            And rc.deleted = 0
+            <if test="keyword != null and keyword !=''">
+                AND rc.name LIKE CONCAT('%',#{keyword},'%')
+            </if>
+            ORDER BY rc.id
+        </trim>
+    </select>
 </mapper>
