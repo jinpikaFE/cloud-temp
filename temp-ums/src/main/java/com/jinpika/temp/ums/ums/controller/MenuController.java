@@ -2,7 +2,7 @@ package com.jinpika.temp.ums.ums.controller;
 
 
 import com.jinpika.common.api.CommonResult;
-import com.jinpika.temp.ums.ums.mapper.MenuMapper;
+import com.jinpika.temp.ums.ums.dto.MenuNode;
 import com.jinpika.temp.ums.ums.model.Menu;
 import com.jinpika.temp.ums.ums.service.MenuService;
 import io.swagger.annotations.Api;
@@ -30,9 +30,6 @@ public class MenuController {
     @Autowired
     private MenuService menuService;
 
-    @Autowired
-    private MenuMapper menuMapper;
-
     @ApiOperation("添加菜单")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ResponseEntity<CommonResult<Object>> create(@RequestBody Menu menu) {
@@ -43,6 +40,9 @@ public class MenuController {
     @ApiOperation("删除菜单")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<CommonResult<Object>> delete(@PathVariable Long id) {
+        if (menuService.getById(id) == null) {
+            return CommonResult.validateFailed("记录不存在");
+        }
         boolean success = menuService.removeById(id);
         return success ? CommonResult.success(null) : CommonResult.failed();
     }
@@ -60,6 +60,13 @@ public class MenuController {
     public ResponseEntity<CommonResult<List<Menu>>> list() {
         List<Menu> menuList = menuService.list();
         return CommonResult.success(menuList);
+    }
+
+    @ApiOperation("树形结构返回所有菜单列表")
+    @RequestMapping(value = "/treeList", method = RequestMethod.GET)
+    public ResponseEntity<CommonResult<List<MenuNode>>> treeList() {
+        List<MenuNode> list = menuService.treeList();
+        return CommonResult.success(list);
     }
 }
 
