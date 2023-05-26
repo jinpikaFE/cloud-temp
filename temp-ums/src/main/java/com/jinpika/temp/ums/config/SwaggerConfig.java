@@ -14,8 +14,8 @@ public class SwaggerConfig extends BaseSwaggerConfig {
     public SwaggerProperties swaggerProperties() {
         return SwaggerProperties.builder()
                 .apiBasePackage("com.jinpika.temp.ums.ums.controller")
-                .title("mall前台系统")
-                .description("mall前台相关接口文档")
+                .title("用户中心")
+                .description("用户相关接口")
                 .contactName("金皮卡")
                 .version("1.0")
                 .enableSecurity(true)

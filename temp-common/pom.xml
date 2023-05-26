@@ -197,7 +197,6 @@
             <version>${nimbus-jose-jwt.version}</version>
         </dependency>
 
-
     </dependencies>
 
     <dependencyManagement>

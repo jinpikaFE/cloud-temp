@@ -24,8 +24,8 @@ public class ResourceServiceImpl {
     @PostConstruct
     public void initData() {
         resourceRolesMap = new TreeMap<>();
-        resourceRolesMap.put("/api/temp-ums/ums/user/list", CollUtil.toList("ADMIN"));
-        resourceRolesMap.put("/api/v1/ums/user/list", CollUtil.toList("ADMIN", "TEST"));
+//        resourceRolesMap.put("/api/temp-ums/ums/user/list", CollUtil.toList("ADMIN"));
+//        resourceRolesMap.put("/api/v1/ums/user/list", CollUtil.toList("ADMIN", "TEST"));
         resourceRolesMap.put("/user/list", CollUtil.toList("ADMIN", "TEST"));
         redisTemplate.opsForHash().putAll(RedisConstant.RESOURCE_ROLES_MAP, resourceRolesMap);
     }
