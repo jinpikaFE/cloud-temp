@@ -91,9 +91,9 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         if (!success) {
             Asserts.fail("修改角色基本信息失败");
         }
-        if (roleDto.getMenuIds() != null) {
+//        if (roleDto.getMenuIds() != null) {
             this.allocMenu(Long.valueOf(roleDto.getId()), roleDto.getMenuIds());
-        }
+//        }
 
         if (roleDto.getResourceIds() != null) {
             this.allocResource(Long.valueOf(roleDto.getId()), roleDto.getResourceIds());

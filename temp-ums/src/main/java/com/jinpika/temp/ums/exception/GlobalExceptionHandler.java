@@ -3,6 +3,8 @@ package com.jinpika.temp.ums.exception;
 import cn.hutool.json.JSONObject;
 import com.jinpika.common.api.CommonResult;
 import com.jinpika.common.exception.ApiException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
  */
 @ControllerAdvice
 public class GlobalExceptionHandler {
+    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ResponseBody
     @ExceptionHandler(value = ApiException.class)
@@ -32,12 +35,14 @@ public class GlobalExceptionHandler {
         }
         return CommonResult.failed(e.getMessage());
     }
-//    运行异常捕捉
-//    @ResponseBody
-//    @ExceptionHandler(value = RuntimeException.class)
-//    public ResponseEntity<CommonResult<JSONObject>> handleRuntimeException(RuntimeException e) {
-//        return CommonResult.failed(e.getMessage());
-//    }
+
+    //    运行异常捕捉
+    @ResponseBody
+    @ExceptionHandler(value = RuntimeException.class)
+    public ResponseEntity<CommonResult<JSONObject>> handleRuntimeException(RuntimeException e) {
+        logger.error("运行异常", e);
+        return CommonResult.failed(e.getMessage());
+    }
 
     @ResponseBody
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
