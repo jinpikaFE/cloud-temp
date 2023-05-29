@@ -13,17 +13,17 @@ import java.util.Date;
 
 /**
  * <p>
- * 角色菜单关系表
+ * 角色资源关系表
  * </p>
  *
  * @author jinpika
- * @since 2023-05-26
+ * @since 2023-05-29
  */
 @Getter
 @Setter
-@TableName("role_menu")
-@ApiModel(value = "RoleMenu对象", description = "角色菜单关系表")
-public class RoleMenu implements Serializable {
+@TableName("role_resource")
+@ApiModel(value = "RoleResource对象", description = "角色资源关系表")
+public class RoleResource implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -33,8 +33,8 @@ public class RoleMenu implements Serializable {
     @ApiModelProperty("角色ID")
     private Long roleId;
 
-    @ApiModelProperty("菜单ID")
-    private Long menuId;
+    @ApiModelProperty("资源ID")
+    private Long resourceId;
 
     private Date createdAt;
 

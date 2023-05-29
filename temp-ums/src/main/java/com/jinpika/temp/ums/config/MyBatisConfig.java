@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * Created by macro on 2019/4/8.
  */
 @Configuration
-@EnableTransactionManagement
+@EnableTransactionManagement // 开启事务
 @MapperScan({"com.jinpika.temp.ums.*.mapper"})
 public class MyBatisConfig {
 

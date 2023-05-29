@@ -10,4 +10,40 @@
         <result column="updated_at" property="updatedAt"/>
     </resultMap>
 
+    <!-- 关联菜单和资源查询映射结果 -->
+    <resultMap id="AssMenuResourceResultMap" type="com.jinpika.temp.ums.ums.dto.RoleDto">
+        <id column="id" property="id"/>
+        <result column="role_id" property="roleId"/>
+        <result column="resource_id" property="resourceId"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+        <collection property="menus" select="getMenusByRoleId" column="id"></collection>
+        <collection property="resources" select="getResourcesByRoleId" column="id"></collection>
+    </resultMap>
+
+    <select id="getMenusByRoleId" resultType="com.jinpika.temp.ums.ums.model.Menu">
+        select m.*
+        from role_menu rm
+                 left join menu m on rm.menu_id = m.id
+        where rm.role_id = #{id}
+    </select>
+
+    <select id="getResourcesByRoleId" resultType="com.jinpika.temp.ums.ums.model.Resource">
+        select re.*
+        from role_resource rr
+                 left join resource re on rr.resource_id = re.id
+        where rr.role_id = #{id}
+    </select>
+
+    <select id="getRoleList" resultMap="AssMenuResourceResultMap">
+        SELECT r.id, r.role_name, r.created_at
+        FROM role r
+        <trim prefix="where" prefixOverrides="and">
+            And r.deleted = 0
+            <if test="keyword != null and keyword !=''">
+                AND r.role_name LIKE CONCAT('%',#{keyword},'%')
+            </if>
+            ORDER BY r.id
+        </trim>
+    </select>
 </mapper>

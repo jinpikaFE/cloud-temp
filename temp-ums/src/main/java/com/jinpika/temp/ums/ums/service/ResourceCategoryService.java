@@ -3,6 +3,7 @@ package com.jinpika.temp.ums.ums.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.jinpika.temp.ums.ums.model.ResourceCategory;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -22,4 +23,14 @@ public interface ResourceCategoryService extends IService<ResourceCategory> {
      * @return
      */
     Page<ResourceCategory> list(String keyword, Integer pageSzie, Integer pageNum);
+
+    /**
+     * 删除资源分类
+     *
+     * @param id
+     * @param resourceCategory
+     * @return
+     */
+    @Transactional
+    Boolean delete(Long id, ResourceCategory resourceCategory);
 }

@@ -57,6 +57,9 @@ public class ResourceController {
     @ApiOperation("更新资源")
     @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
     public ResponseEntity<CommonResult<Object>> update(@PathVariable Integer id, @RequestBody Resource resource) {
+        if (resourceService.getById(id) == null) {
+            return CommonResult.validateFailed("记录不存在");
+        }
         resource.setId(id);
         boolean success = resourceService.updateById(resource);
         return success ? CommonResult.success(null) : CommonResult.failed();

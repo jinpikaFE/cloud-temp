@@ -1,12 +1,9 @@
 package com.jinpika.temp.ums.ums.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jinpika.common.api.CommonPage;
 import com.jinpika.common.api.CommonResult;
-import com.jinpika.temp.ums.ums.mapper.ResourceMapper;
-import com.jinpika.temp.ums.ums.model.Resource;
 import com.jinpika.temp.ums.ums.model.ResourceCategory;
 import com.jinpika.temp.ums.ums.service.ResourceCategoryService;
 import io.swagger.annotations.Api;
@@ -31,8 +28,6 @@ import org.springframework.web.bind.annotation.*;
 public class ResourceCategoryController {
     @Autowired
     private ResourceCategoryService resourceCategoryService;
-    @Autowired
-    private ResourceMapper resourceMapper;
 
 
     @ApiOperation("添加资源分类")
@@ -49,19 +44,16 @@ public class ResourceCategoryController {
         if (resourceCategory == null) {
             return CommonResult.validateFailed("记录不存在");
         }
-        /**
-         * 删除分类下的资源
-         */
-        LambdaQueryWrapper<Resource> wrapper = new LambdaQueryWrapper<>();
-        wrapper.in(Resource::getCategoryId, resourceCategory.getId());
-        resourceMapper.delete(wrapper);
-        boolean success = resourceCategoryService.removeById(id);
+        Boolean success = resourceCategoryService.delete(id, resourceCategory);
         return success ? CommonResult.success(null) : CommonResult.failed();
     }
 
     @ApiOperation("更新资源分类")
     @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
     public ResponseEntity<CommonResult<Object>> update(@PathVariable Integer id, @RequestBody ResourceCategory resourceCategory) {
+        if (resourceCategoryService.getById(id) == null) {
+            return CommonResult.validateFailed("记录不存在");
+        }
         resourceCategory.setId(id);
         boolean success = resourceCategoryService.updateById(resourceCategory);
         return success ? CommonResult.success(null) : CommonResult.failed();
