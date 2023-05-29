@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * 各个微服务自行处理异常
+ */
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -29,6 +32,12 @@ public class GlobalExceptionHandler {
         }
         return CommonResult.failed(e.getMessage());
     }
+//    运行异常捕捉
+//    @ResponseBody
+//    @ExceptionHandler(value = RuntimeException.class)
+//    public ResponseEntity<CommonResult<JSONObject>> handleRuntimeException(RuntimeException e) {
+//        return CommonResult.failed(e.getMessage());
+//    }
 
     @ResponseBody
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
