@@ -3,9 +3,9 @@ package com.jinpika.temp.auth.domain;
 import com.jinpika.common.domain.UserDto;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Data
@@ -35,7 +35,7 @@ public class SecurityUser implements UserDetails {
     /**
      * 权限数据
      */
-    private Collection<SimpleGrantedAuthority> authorities;
+    private Collection authorities;
 
     public SecurityUser() {
 
@@ -46,10 +46,11 @@ public class SecurityUser implements UserDetails {
         this.setUsername(userDto.getUsername());
         this.setPassword(userDto.getPassword());
         this.setEnabled(userDto.getStatus() == 1);
-//        if (userDto.getRoles() != null) {
-//            authorities = new ArrayList<>();
-//            userDto.getRoles().forEach(item -> authorities.add(new SimpleGrantedAuthority(item)));
-//        }
+        if (userDto.getRoles() != null) {
+            authorities = new ArrayList<>();
+            // 到网关的鉴权管理器对应食用
+            userDto.getRoles().forEach(item -> authorities.add(item));
+        }
     }
 
     @Override
