@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;
 import cn.hutool.json.JSONUtil;
 import com.jinpika.common.utils.IPUtils;
-import com.jinpika.temp.ums.common.log.dto.WebLogDto;
+import com.jinpika.temp.admin.common.log.dto.WebLogDto;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;

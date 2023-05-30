@@ -11,4 +11,32 @@
         <result column="update_at" property="updateAt"/>
     </resultMap>
 
+    <!-- 关联菜单和资源查询映射结果 -->
+    <resultMap id="AssRoleResultMap" type="com.jinpika.temp.ums.ums.dto.AdminDto">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="update_at" property="updateAt"/>
+        <collection property="roles" select="getRolesByAdminId" column="id"></collection>
+    </resultMap>
+
+    <select id="getRolesByAdminId" resultType="com.jinpika.temp.ums.ums.model.Role">
+        select r.*
+        from admin_role ar
+                 left join role r on ar.role_id = r.id
+        where ar.user_id = #{id}
+    </select>
+
+    <select id="getAdminList" resultMap="AssRoleResultMap">
+        SELECT a.id, a.username, a.created_at
+        FROM admin a
+        <trim prefix="where" prefixOverrides="and">
+            And a.deleted = 0
+            <if test="keyword != null and keyword !=''">
+                AND a.username LIKE CONCAT('%',#{keyword},'%')
+            </if>
+            ORDER BY a.id
+        </trim>
+    </select>
+
 </mapper>
