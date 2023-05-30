@@ -28,3 +28,8 @@ mybatis-plus:
   configuration:
     auto-mapping-behavior: partial
     map-underscore-to-camel-case: true
+
+auth-info:
+  client-id: admin-app
+  client-secret: 123456
+  grant-type: password

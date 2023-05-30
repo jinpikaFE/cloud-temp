@@ -1,9 +1,13 @@
 package com.jinpika.temp.ums.ums.service.impl;
 
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.crypto.digest.BCrypt;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.jinpika.common.api.CommonResult;
 import com.jinpika.common.exception.Asserts;
+import com.jinpika.temp.ums.feign.AuthFeignService;
 import com.jinpika.temp.ums.ums.dto.AdminDto;
 import com.jinpika.temp.ums.ums.mapper.AdminMapper;
 import com.jinpika.temp.ums.ums.model.Admin;
@@ -11,10 +15,14 @@ import com.jinpika.temp.ums.ums.model.AdminRole;
 import com.jinpika.temp.ums.ums.service.AdminRoleService;
 import com.jinpika.temp.ums.ums.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -32,6 +40,18 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     @Autowired
     private AdminRoleService adminRoleService;
 
+    @Autowired
+    private AuthFeignService authFeignService;
+
+    @Value("${auth-info.client-id}")
+    private String CLIENT_ID;
+
+    @Value("${auth-info.client-secret}")
+    private String CLIENT_SECRET;
+
+    @Value("${auth-info.grant-type}")
+    private String GRANT_TYPE;
+
     @Override
     public Page<Admin> list(String keyword, Integer pageSzie, Integer pageNum) {
         Page<Admin> page = new Page<>(pageNum, pageSzie);
@@ -48,6 +68,10 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         if (adminMapper.exists(wrapper)) {
             Asserts.fail("用户名已经存在");
         }
+
+        //将密码进行加密操作
+        String encodePassword = BCrypt.hashpw(adminDto.getPassword());
+        adminDto.setPassword(encodePassword);
 
         Boolean success = save(adminDto);
         if (!success) {
@@ -96,5 +120,20 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         }
         adminRoleService.saveBatch(relationList);
         return roleIds.size();
+    }
+
+    @Override
+    public ResponseEntity<CommonResult> login(String username, String password) {
+        if (StrUtil.isEmpty(username) || StrUtil.isEmpty(password)) {
+            Asserts.fail("用户名或密码不能为空！");
+        }
+        Map<String, String> params = new HashMap<>();
+        params.put("client_id", CLIENT_ID);
+        params.put("client_secret", CLIENT_SECRET);
+        params.put("grant_type", GRANT_TYPE);
+        params.put("username", username);
+        params.put("password", password);
+        ResponseEntity<CommonResult> restResult = authFeignService.postAccessToken(params);
+        return restResult;
     }
 }

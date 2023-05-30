@@ -2,8 +2,10 @@ package com.jinpika.temp.ums.ums.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.jinpika.common.api.CommonResult;
 import com.jinpika.temp.ums.ums.dto.AdminDto;
 import com.jinpika.temp.ums.ums.model.Admin;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -35,4 +37,6 @@ public interface AdminService extends IService<Admin> {
 
     @Transactional
     boolean update(Integer id, AdminDto adminDto);
+
+    ResponseEntity<CommonResult> login(String username, String password);
 }

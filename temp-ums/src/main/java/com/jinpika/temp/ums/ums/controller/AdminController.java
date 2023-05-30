@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jinpika.common.api.CommonPage;
 import com.jinpika.common.api.CommonResult;
 import com.jinpika.temp.ums.ums.dto.AdminDto;
+import com.jinpika.temp.ums.ums.dto.AdminLoginParam;
 import com.jinpika.temp.ums.ums.model.Admin;
 import com.jinpika.temp.ums.ums.service.AdminService;
 import io.swagger.annotations.Api;
@@ -12,6 +13,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -66,6 +68,13 @@ public class AdminController {
                                                                 @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
         Page<Admin> list = adminService.list(keyword, pageSize, pageNum);
         return CommonResult.success(CommonPage.restPage(list));
+    }
+
+    @ApiOperation(value = "登录以后返回token")
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<CommonResult> login(@Validated @RequestBody AdminLoginParam adminLoginParam) {
+        return adminService.login(adminLoginParam.getUsername(), adminLoginParam.getPassword());
     }
 }
 
