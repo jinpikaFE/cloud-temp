@@ -52,3 +52,8 @@ secure:
       - /api/v1/admin/register
       #      - /api/v1/admin/info
       - /api/v1/admin/logout
+
+auth-info:
+  client-id: admin-app
+  client-secret: 123456
+  grant-type: password

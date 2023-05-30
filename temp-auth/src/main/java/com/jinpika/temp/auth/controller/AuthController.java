@@ -11,7 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.endpoint.TokenEndpoint;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -53,15 +56,5 @@ public class AuthController {
                 .tokenHead("Bearer ").build();
 
         return CommonResult.success(oauth2TokenDto);
-    }
-
-    /**
-     * Oauth2登录认证
-     */
-    @ApiOperation("test")
-    @GetMapping("/test")
-    public ResponseEntity<CommonResult<String>> test() {
-
-        return CommonResult.success("test");
     }
 }

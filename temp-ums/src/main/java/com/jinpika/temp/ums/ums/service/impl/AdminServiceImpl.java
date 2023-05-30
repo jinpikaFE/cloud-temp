@@ -136,4 +136,21 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         ResponseEntity<CommonResult> restResult = authFeignService.postAccessToken(params);
         return restResult;
     }
+
+    @Override
+    public AdminDto getDetail(Integer id) {
+        AdminDto result = adminMapper.getAdminDetail(id);
+        return result;
+    }
+
+    @Override
+    public AdminDto getCurrentAdmin() {
+        return null;
+    }
+
+    @Override
+    public AdminDto loadUserByUsername(String username) {
+        AdminDto result = adminMapper.getAdminDetailByUsername(username);
+        return result;
+    }
 }

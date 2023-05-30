@@ -1,19 +1,20 @@
-package com.jinpika.temp.auth.domain;
+package com.jinpika.common.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-@AllArgsConstructor
-public class UserDTO {
+@NoArgsConstructor
+public class UserDto {
     private Long id;
     private String username;
     private String password;
     private Integer status;
-    private List<String> roles;
+    private String clientId;
+    private List<?> roles;
 
 }

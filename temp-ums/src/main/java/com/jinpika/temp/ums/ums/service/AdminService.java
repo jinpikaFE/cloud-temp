@@ -39,4 +39,16 @@ public interface AdminService extends IService<Admin> {
     boolean update(Integer id, AdminDto adminDto);
 
     ResponseEntity<CommonResult> login(String username, String password);
+
+    /**
+     * 根据id获取用户详情
+     *
+     * @param id
+     * @return
+     */
+    AdminDto getDetail(Integer id);
+
+    AdminDto getCurrentAdmin();
+
+    AdminDto loadUserByUsername(String username);
 }

@@ -1,8 +1,8 @@
 package com.jinpika.temp.gateway.authorization;
 
 import cn.hutool.core.convert.Convert;
-import com.jinpika.temp.gateway.constant.AuthConstant;
-import com.jinpika.temp.gateway.constant.RedisConstant;
+import com.jinpika.common.constant.AuthConstant;
+import com.jinpika.common.constant.RedisConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authorization.AuthorizationDecision;

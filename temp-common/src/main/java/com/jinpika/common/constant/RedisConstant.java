@@ -1,4 +1,4 @@
-package com.jinpika.temp.gateway.constant;
+package com.jinpika.common.constant;
 
 public class RedisConstant {
 

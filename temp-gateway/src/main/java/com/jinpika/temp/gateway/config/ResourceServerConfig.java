@@ -1,10 +1,10 @@
 package com.jinpika.temp.gateway.config;
 
 import cn.hutool.core.util.ArrayUtil;
+import com.jinpika.common.constant.AuthConstant;
 import com.jinpika.temp.gateway.authorization.AuthorizationManager;
 import com.jinpika.temp.gateway.component.RestAuthenticationEntryPoint;
 import com.jinpika.temp.gateway.component.RestfulAccessDeniedHandler;
-import com.jinpika.temp.gateway.constant.AuthConstant;
 import com.jinpika.temp.gateway.filter.IgnoreUrlsRemoveJwtFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;

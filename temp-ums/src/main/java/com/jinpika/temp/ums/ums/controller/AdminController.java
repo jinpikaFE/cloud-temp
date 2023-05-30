@@ -76,5 +76,27 @@ public class AdminController {
     public ResponseEntity<CommonResult> login(@Validated @RequestBody AdminLoginParam adminLoginParam) {
         return adminService.login(adminLoginParam.getUsername(), adminLoginParam.getPassword());
     }
+
+    @ApiOperation("获取指定用户信息")
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<CommonResult<AdminDto>> getItem(@PathVariable Integer id) {
+        AdminDto adminDto = adminService.getDetail(id);
+        return CommonResult.success(adminDto);
+    }
+
+    @ApiOperation(value = "获取当前登录用户信息")
+    @RequestMapping(value = "/info", method = RequestMethod.GET)
+    public ResponseEntity<CommonResult<AdminDto>> getAdminInfo() {
+        AdminDto adminDto = adminService.getCurrentAdmin();
+
+        return CommonResult.success(adminDto);
+    }
+
+    @ApiOperation("根据用户名获取通用用户信息")
+    @RequestMapping(value = "/loadByUsername", method = RequestMethod.GET)
+    public AdminDto loadUserByUsername(@RequestParam String username) {
+        AdminDto adminDto = adminService.loadUserByUsername(username);
+        return adminDto;
+    }
 }
 

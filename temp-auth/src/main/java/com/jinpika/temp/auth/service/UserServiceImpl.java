@@ -1,10 +1,11 @@
 package com.jinpika.temp.auth.service;
 
-import cn.hutool.core.collection.CollUtil;
+import com.jinpika.common.domain.UserDto;
 import com.jinpika.temp.auth.constant.MessageConstant;
 import com.jinpika.temp.auth.domain.SecurityUser;
-import com.jinpika.temp.auth.domain.UserDTO;
+import com.jinpika.temp.auth.feign.UmsFeignService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.authentication.DisabledException;
@@ -15,10 +16,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 用户管理业务类
@@ -26,25 +24,37 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserDetailsService {
 
-    private List<UserDTO> userList;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @PostConstruct
-    public void initData() {
-        String password = passwordEncoder.encode("123456");
-        userList = new ArrayList<>();
-        userList.add(new UserDTO(1L, "macro", password, 1, CollUtil.toList("ADMIN")));
-        userList.add(new UserDTO(2L, "andy", password, 1, CollUtil.toList("TEST")));
-    }
+    @Autowired
+    private UmsFeignService umsFeignService;
+
+    @Autowired
+    private HttpServletRequest request;
+
+    @Value("${auth-info.client-id}")
+    private String CLIENT_ID;
+
+    @Value("${auth-info.client-secret}")
+    private String CLIENT_SECRET;
+
+    @Value("${auth-info.grant-type}")
+    private String GRANT_TYPE;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        List<UserDTO> findUserList = userList.stream().filter(item -> item.getUsername().equals(username)).collect(Collectors.toList());
-        if (CollUtil.isEmpty(findUserList)) {
+        String clientId = request.getParameter("client_id");
+        UserDto userDto;
+//        if(CLIENT_ID.equals(clientId)){
+//            userDto = umsFeignService.loadUserByUsername(username);
+//        } // 其他client_id 在此处扩展
+        userDto = umsFeignService.loadUserByUsername(username);
+        if (userDto == null) {
             throw new UsernameNotFoundException(MessageConstant.USERNAME_PASSWORD_ERROR);
         }
-        SecurityUser securityUser = new SecurityUser(findUserList.get(0));
+        userDto.setClientId(clientId);
+        SecurityUser securityUser = new SecurityUser(userDto);
         if (!securityUser.isEnabled()) {
             throw new DisabledException(MessageConstant.ACCOUNT_DISABLED);
         } else if (!securityUser.isAccountNonLocked()) {

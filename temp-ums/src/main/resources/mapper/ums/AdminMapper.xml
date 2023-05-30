@@ -7,6 +7,7 @@
         <id column="id" property="id"/>
         <result column="username" property="username"/>
         <result column="password" property="password"/>
+        <result column="status" property="status"/>
         <result column="created_at" property="createdAt"/>
         <result column="update_at" property="updateAt"/>
     </resultMap>
@@ -15,6 +16,7 @@
     <resultMap id="AssRoleResultMap" type="com.jinpika.temp.ums.ums.dto.AdminDto">
         <id column="id" property="id"/>
         <result column="username" property="username"/>
+        <result column="status" property="status"/>
         <result column="created_at" property="createdAt"/>
         <result column="update_at" property="updateAt"/>
         <collection property="roles" select="getRolesByAdminId" column="id"></collection>
@@ -28,7 +30,7 @@
     </select>
 
     <select id="getAdminList" resultMap="AssRoleResultMap">
-        SELECT a.id, a.username, a.created_at
+        SELECT a.id, a.username, a.created_at,a.status
         FROM admin a
         <trim prefix="where" prefixOverrides="and">
             And a.deleted = 0
@@ -36,6 +38,22 @@
                 AND a.username LIKE CONCAT('%',#{keyword},'%')
             </if>
             ORDER BY a.id
+        </trim>
+    </select>
+
+    <select id="getAdminDetail" resultMap="AssRoleResultMap">
+        SELECT a.id, a.username, a.created_at, a.status
+        FROM admin a
+        <trim prefix="where" prefixOverrides="and">
+            And a.deleted = 0 And a.id=#{id}
+        </trim>
+    </select>
+
+    <select id="getAdminDetailByUsername" resultMap="AssRoleResultMap">
+        SELECT a.id, a.username, a.created_at, a.password, a.status
+        FROM admin a
+        <trim prefix="where" prefixOverrides="and">
+            And a.deleted = 0 And a.username=#{username}
         </trim>
     </select>
 
